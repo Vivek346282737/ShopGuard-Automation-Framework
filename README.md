@@ -1,7 +1,7 @@
-# ShopGuard – Enterprise 3-Tier Test Automation Framework (UI + API + SQL)
+# ShopGuard ï¿½ Enterprise 3-Tier Test Automation Framework (UI + API + SQL)
 
 [![ShopGuard Enterprise Automation CI](https://github.com/Vivek346282737/ShopGuard-Automation-Framework/actions/workflows/ci.yml/badge.svg)](https://github.com/Vivek346282737/ShopGuard-Automation-Framework/actions)
-![Tests](https://img.shields.io/badge/Tests-13%20Passed-brightgreen)
+![Tests](https://img.shields.io/badge/Tests-19%20Passed-brightgreen)
 ![Java](https://img.shields.io/badge/Java-17-blue)
 ![Selenium](https://img.shields.io/badge/Selenium-4.24-orange)
 ![REST Assured](https://img.shields.io/badge/REST%20Assured-5.5-red)
@@ -11,7 +11,7 @@ A production-ready hybrid automation framework architected in Java 17 delivering
 
 ---
 
-## Live Test Execution Matrix (13/13 Scenarios Passing)
+## Live Test Execution Matrix (19/19 Scenarios Passing)
 
 | Scenario ID | Layer | Test Method | Target / Verification | Result |
 |---|---|---|---|---|
@@ -45,3 +45,10 @@ Execution Summary: 13 Executed, 13 Passed, 0 Failed, 0 Skipped (100% Pass Rate)
 ## Suite Execution Commands
 - Run complete test suite: mvn clean test
 - Generate Allure report: mvn allure:serve
+
+
+### 4. Behavioral Driven Development (BDD / Cucumber Tier)
+| Feature / Scenario Outline | Parameters | Target Layer | Verification Focus | Status |
+|---|---|---|---|---|
+| Verify multi-item cart calculation | Laptop-Pro (qty: 1, CREDIT_CARD) | BDD -> UI/DB | Order Confirmation & Inventory Decr. | PASS |
+| Verify multi-item cart calculation | Wire-Headset (qty: 2, UPI_INSTANT) | BDD -> UI/DB | Dual Item Ledger Reconciliation | PASS |
