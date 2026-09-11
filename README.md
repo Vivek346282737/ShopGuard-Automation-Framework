@@ -4,18 +4,18 @@
 
 ---
 
-### Test Strategy & Execution Profiles
-* **Test Strategy**: Smoke, Sanity, Regression, Functional, API, and Database validation organized via TestNG groups and XML suites.
-* **Execution Profiles**: Supports targeted Smoke runs for fast CI verification as well as full-regression clearance across presentation (UI), service (API), and persistence (SQL) tiers.
-![Tests](https://img.shields.io/badge/Tests-19%20Passed-brightgreen)
-![Java](https://img.shields.io/badge/Java-17-blue)
-![Selenium](https://img.shields.io/badge/Selenium-4.24-orange)
-![REST Assured](https://img.shields.io/badge/REST%20Assured-5.5-red)
-![Architecture](https://img.shields.io/badge/Architecture-3--Tier%20Hybrid-purple)
 
-An enterprise-style hybrid automation framework architected in Java 17 delivering synchronized end-to-end verification across Presentation (UI), Service (REST API), and Persistence (Database) tiers.
+## Test Strategy
 
----
+- Functional Testing
+- Smoke Testing
+- Sanity Testing
+- Regression Testing
+- UI Testing with Selenium WebDriver
+- API Testing with REST Assured
+- Database Validation with JDBC/SQL
+- TestNG-based test execution and grouping
+- Page Object Model (POM)
 
 ## Live Test Execution Matrix (19/19 Scenarios Passing)
 
