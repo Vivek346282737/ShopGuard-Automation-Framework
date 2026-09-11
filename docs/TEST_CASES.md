@@ -1,19 +1,19 @@
-# ShopGuard – Automated Test Execution Matrix (13 Scenarios)
+# ShopGuard – 13 Core Test Scenarios Matrix
 
-| ID | Layer | Test Name | Method / File | Assertion / Verification Target | Status |
+| ID | Group | Layer | Test Method | Target / Verification | Pass/Fail |
 |---|---|---|---|---|---|
-| TC-01 | UI | Invalid Login - Locked Out User | `testInvalidLoginScenarios` | Verify dynamic alert: `Epic sadface: Sorry, this user has been locked out.` | ✅ PASS |
-| TC-02 | UI | Invalid Login - Wrong Password | `testInvalidLoginScenarios` | Verify error banner: `Username and password do not match` | ✅ PASS |
-| TC-03 | UI | Invalid Login - Empty Username | `testInvalidLoginScenarios` | Verify validation warning: `Username is required` | ✅ PASS |
-| TC-04 | UI | Invalid Login - Empty Password | `testInvalidLoginScenarios` | Verify validation warning: `Password is required` | ✅ PASS |
-| TC-05 | UI | Invalid Login - Non-existent User | `testInvalidLoginScenarios` | Assert authentication rejection | ✅ PASS |
-| TC-06 | UI | Valid User Login Journey | `testValidLogin` | Verify landing page redirection to `/inventory.html` and header title | ✅ PASS |
-| TC-07 | UI | User Session Logout | `testLogout` | Assert session invalidation and navigation back to login screen | ✅ PASS |
-| TC-08 | UI | Checkout Negative Validation | `testCheckoutMissingPostalCode` | Assert inline postal code missing error in multi-step form | ✅ PASS |
-| TC-09 | UI | End-to-End E-Commerce Checkout | `testFullCheckoutJourney` | Assert full order journey, item calculation, and thank you confirmation | ✅ PASS |
-| TC-10 | API | Create User Endpoint | `testCreateUser` | HTTP POST validation, status 201 Created & non-null response payload ID | ✅ PASS |
-| TC-11 | API | Fetch User Directory | `testGetUsersList` | HTTP GET verification, status 200 OK & root data array validation | ✅ PASS |
-| TC-12 | API | Negative Resource Retrieval | `testUserNotFound` | HTTP GET 404 Not Found schema & empty response verification | ✅ PASS |
-| TC-13 | SQL/DB | Transaction Persistence | `testOrderDatabaseRecord` | In-memory JDBC query (`SELECT COUNT(*) FROM orders WHERE order_id='ORD-9821'`) | ✅ PASS |
+| TC-01 | Smoke, Reg | UI | `LoginTests.testValidLogin` | Standard authentication & inventory redirect | PASS |
+| TC-02 | Regression | UI | `LoginTests.testInvalidLoginScenarios[0]` | Locked-out account error validation | PASS |
+| TC-03 | Regression | UI | `LoginTests.testInvalidLoginScenarios[1]` | Invalid username assertion | PASS |
+| TC-04 | Regression | UI | `LoginTests.testInvalidLoginScenarios[2]` | Invalid password assertion | PASS |
+| TC-05 | Regression | UI | `LoginTests.testInvalidLoginScenarios[3]` | Empty username validation banner | PASS |
+| TC-06 | Regression | UI | `LoginTests.testInvalidLoginScenarios[4]` | Empty password validation banner | PASS |
+| TC-07 | Regression | UI | `LoginTests.testLogout` | Session termination & redirect to login view | PASS |
+| TC-08 | Smoke, Reg | UI | `CheckoutTests.testFullCheckoutJourney` | Multi-step purchase flow completion | PASS |
+| TC-09 | Regression | UI | `CheckoutTests.testCheckoutMissingPostalCode` | Form validation: Missing postal code assertion | PASS |
+| TC-10 | Smoke, Reg | API | `UserApiTests.testGetUsersList` | HTTP GET /users, 200 OK & schema consistency | PASS |
+| TC-11 | Smoke, Reg | API | `UserApiTests.testCreateUser` | HTTP POST /users, 201 Created & ID returned | PASS |
+| TC-12 | Regression | API | `UserApiTests.testUserNotFound` | HTTP GET /users/23, 404 resource not found | PASS |
+| TC-13 | Smoke, Reg | DB | `DatabaseTests.testOrderDatabaseRecord` | SQL query: In-memory JDBC record persistence | PASS |
 
-**Suite Result: 13 Passed, 0 Failed, 0 Skipped (100% Suite Pass Rate)**
+**Suite Result: 13 Tests Executed, 13 Passed (100% Pass Rate)**

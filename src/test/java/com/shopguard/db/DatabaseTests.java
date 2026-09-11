@@ -12,13 +12,13 @@ import org.testng.annotations.Test;
 @Feature("Order Persistence Validation")
 public class DatabaseTests {
 
-    @BeforeClass
+    @BeforeClass(groups = {"smoke", "regression"})
     public void setupDatabase() {
         DatabaseManager.initializeMockDatabase();
     }
 
-    @Test(description = "Verify placed order persistence in database via SQL query")
-    @Description("Executes SQL query against orders table to validate order state and settlement")
+    @Test(groups = {"smoke", "regression"}, description = "Verify placed order persistence in database via SQL query")
+    @Description("Executes SQL query against orders table to validate transaction state")
     public void testOrderDatabaseRecord() {
         boolean isPresent = DatabaseManager.verifyOrderExists("ORD-9821");
         Assert.assertTrue(isPresent, "SQL assertion failed: Order record ORD-9821 not found in database!");

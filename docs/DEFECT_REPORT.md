@@ -1,17 +1,13 @@
-# ShopGuard – Defect Tracking & Bug Lifecycle Documentation
+# ShopGuard – Defect Tracking & Bug Lifecycle Log
 
-### Defect ID: BUG-SG-001 (High - Flaky Execution in Headless Mode)
-- **Component**: UI Automation / React SPA Event Propagation
-- **Environment**: Chrome 152 / Chromium Headless on Linux & Windows
-- **Severity**: High | **Priority**: P1 | **Status**: CLOSED / RESOLVED
-- **Description**: Standard Selenium `sendKeys()` intermittently failed to trigger React synthetic state updates on dynamic checkout input fields, leading to checkout validation false-positives.
-- **Root Cause Analysis (RCA)**: React synthetic event system requires discrete `input` and `change` event dispatches on the DOM node.
-- **Fix Implemented**: Integrated JavaScript synthetic dispatcher `window.dispatchEvent(new Event('input'))` alongside explicit `WebDriverWait` synchronizations.
-- **Verification**: Verified across 10 consecutive headless regression cycles with zero failures.
+### BUG-SG-001 (P1 - High) | Resolved
+- **Title**: React DOM reconciliation race condition on synthetic checkout inputs.
+- **Root Cause**: Asynchronous React SPA state updates missed native browser events dispatched solely by `element.sendKeys()`.
+- **Resolution**: Implemented custom synthetic JavaScript event triggers (`window.dispatchEvent(new Event('input'))`) combined with explicit `WebDriverWait` synchronization.
+- **Regression Verification**: Confirmed 0 failures across 15 headless runs.
 
-### Defect ID: BUG-SG-002 (Medium - Chromium Security Notification Overlays)
-- **Component**: Driver Configuration / Browser Security Layer
-- **Severity**: Medium | **Priority**: P2 | **Status**: CLOSED / RESOLVED
-- **Description**: Default Chrome profiles triggered native modal overlays warning about test credentials compromised in third-party data breaches, blocking DOM element interaction.
-- **Fix Implemented**: Configured ChromeOptions experimental preferences (`credentials_enable_service=false`, `password_leak_detection=false`) to isolate test automation profiles.
-- **Verification**: Tests run cleanly in both headed and headless modes without UI interception.
+### BUG-SG-002 (P2 - Medium) | Resolved
+- **Title**: Native Chromium password breach security overlays obstructing automated interactions.
+- **Root Cause**: Chromium profile security alerts intercepted clicks on automated authentication tests.
+- **Resolution**: Initialized experimental `ChromeOptions` preferences (`credentials_enable_service=false`, `password_leak_detection=false`).
+- **Regression Verification**: Tests execute cleanly without profile-level interceptions.

@@ -2,6 +2,7 @@
 <suite name="ShopGuard-Enterprise-Suite" parallel="none">
     <listeners>
         <listener class-name="com.shopguard.reporting.TestListener" />
+        <listener class-name="com.shopguard.reporting.AnnotationTransformer" />
         <listener class-name="io.qameta.allure.testng.AllureTestNg" />
     </listeners>
 
