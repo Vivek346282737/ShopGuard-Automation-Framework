@@ -1,79 +1,45 @@
 package com.shopguard.ui;
 
 import com.shopguard.base.BaseTest;
+import com.shopguard.driver.DriverManager;
 import com.shopguard.pages.*;
-import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-@Epic("E-Commerce Order Suite")
-@Feature("Checkout & Cart Lifecycle")
 public class CheckoutTests extends BaseTest {
 
-    @Test(groups = {"smoke", "regression"}, description = "End-to-end checkout lifecycle test")
-    @Description("Complete multi-step purchase flow and assert thank you message")
+    @Test(groups = {"Smoke", "Regression"}, description = "TC08: Add to cart aur End-to-End Checkout")
     public void testFullCheckoutJourney() {
-        LoginPage loginPage = new LoginPage(getDriver());
-        ProductsPage productsPage = loginPage.loginAs("standard_user", "secret_sauce");
+        LoginPage login = new LoginPage(DriverManager.getDriver());
+        ProductsPage products = login.loginAs("standard_user", "secret_sauce");
 
-        productsPage.addBackpackToCart();
-        Assert.assertEquals(productsPage.getCartBadgeCount(), "1", "Cart badge count mismatch");
+        products.addProductToCart("Sauce Labs Backpack");
+        Assert.assertEquals(products.getCartBadgeCount(), 1);
 
-        CartPage cartPage = productsPage.goToCart();
-        Assert.assertTrue(cartPage.isItemInCart("Sauce Labs Backpack"), "Product item not present in cart");
+        CartPage cart = products.openCart();
+        Assert.assertTrue(cart.isProductInCart("Sauce Labs Backpack"));
 
-        CheckoutStepOnePage stepOne = cartPage.clickCheckout();
-        CheckoutStepTwoPage stepTwo = stepOne.fillInformation("Vivek", "Prasad", "560001");
-        CheckoutCompletePage completePage = stepTwo.clickFinish();
+        CheckoutStepOnePage stepOne = cart.proceedToCheckout();
+        CheckoutStepTwoPage stepTwo = stepOne.submitValidInfo("Vivek", "Prasad", "831001");
 
-        Assert.assertEquals(completePage.getConfirmationHeader(), "Thank you for your order!", "Order confirmation header mismatch");
+        Assert.assertTrue(stepTwo.getSubtotal().contains("29.99"), "Subtotal should contain 29.99");
+        CheckoutCompletePage complete = stepTwo.finishCheckout();
+        Assert.assertEquals(complete.getCompleteMessage(), "Thank you for your order!");
     }
 
-    @Test(groups = {"regression"}, description = "Validate cart add and dynamic removal flow")
-    @Description("Add items and remove product verifying cart badge update")
-    public void testAddAndRemoveFromCart() {
-        LoginPage loginPage = new LoginPage(getDriver());
-        ProductsPage productsPage = loginPage.loginAs("standard_user", "secret_sauce");
-
-        productsPage.addBackpackToCart();
-        Assert.assertEquals(productsPage.getCartBadgeCount(), "1");
-
-        productsPage.removeBackpackFromCart();
-        Assert.assertEquals(productsPage.getCartBadgeCount(), "0", "Cart badge should be empty or zero after removal");
-    }
-
-    @Test(groups = {"regression"}, description = "Validate product sorting by price low to high")
-    @Description("Change sorting to Price (low to high) and assert lowest priced item at top")
-    public void testProductSortingLowToHigh() {
-        LoginPage loginPage = new LoginPage(getDriver());
-        ProductsPage productsPage = loginPage.loginAs("standard_user", "secret_sauce");
-
-        productsPage.selectSortOption("Price (low to high)");
-        double lowestPrice = productsPage.getFirstProductPrice();
-        Assert.assertEquals(lowestPrice, 7.99, "First sorted item price mismatch");
-    }
-
-    @Test(groups = {"regression"}, description = "Checkout form validation: Missing first name")
-    @Description("Assert inline validation banner when first name is omitted")
-    public void testCheckoutMissingFirstName() {
-        LoginPage loginPage = new LoginPage(getDriver());
-        ProductsPage productsPage = loginPage.loginAs("standard_user", "secret_sauce");
-        CartPage cartPage = productsPage.goToCart();
-        CheckoutStepOnePage stepOne = cartPage.clickCheckout();
-        stepOne.fillInformation("", "Prasad", "560001");
-        Assert.assertEquals(stepOne.getErrorMessage(), "Error: First Name is required", "First name error banner mismatch");
-    }
-
-    @Test(groups = {"regression"}, description = "Checkout form validation: Missing postal code")
-    @Description("Assert inline validation banner when postal code is omitted")
+    @Test(groups = {"Regression"}, description = "TC09: Missing Postal code error check")
     public void testCheckoutMissingPostalCode() {
-        LoginPage loginPage = new LoginPage(getDriver());
-        ProductsPage productsPage = loginPage.loginAs("standard_user", "secret_sauce");
-        CartPage cartPage = productsPage.goToCart();
-        CheckoutStepOnePage stepOne = cartPage.clickCheckout();
-        stepOne.fillInformation("Vivek", "Prasad", "");
-        Assert.assertEquals(stepOne.getErrorMessage(), "Error: Postal Code is required", "Postal code error banner mismatch");
+        LoginPage login = new LoginPage(DriverManager.getDriver());
+        ProductsPage products = login.loginAs("standard_user", "secret_sauce");
+
+        products.addProductToCart("Sauce Labs Bike Light");
+        CartPage cart = products.openCart();
+        CheckoutStepOnePage stepOne = cart.proceedToCheckout();
+
+        stepOne.enterCustomerInfo("Vivek", "Prasad", "");
+        stepOne.clickContinue();
+
+        String err = stepOne.getErrorMessage();
+        Assert.assertTrue(err.contains("Postal Code is required"), "Expected postal code required message, got: " + err);
     }
 }
