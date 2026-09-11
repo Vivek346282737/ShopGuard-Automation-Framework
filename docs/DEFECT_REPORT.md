@@ -1,13 +1,13 @@
 # ShopGuard – Defect Tracking & Bug Lifecycle Log
 
-### BUG-SG-001 (P1 - High) | Resolved
-- **Title**: React DOM reconciliation race condition on synthetic checkout inputs.
-- **Root Cause**: Asynchronous React SPA state updates missed native browser events dispatched solely by `element.sendKeys()`.
-- **Resolution**: Implemented custom synthetic JavaScript event triggers (`window.dispatchEvent(new Event('input'))`) combined with explicit `WebDriverWait` synchronization.
-- **Regression Verification**: Confirmed 0 failures across 15 headless runs.
+### BUG-SG-001 (High - Flaky Execution in Headless Mode)
+- **Component**: UI Automation / React SPA Event Propagation
+- **Root Cause Analysis (RCA)**: React synthetic event dispatcher missed input state changes during headless Selenium typing.
+- **Resolution**: Integrated synthetic JavaScript event triggers (`window.dispatchEvent(new Event('input'))`) with explicit waits.
+- **Status**: CLOSED & VERIFIED
 
-### BUG-SG-002 (P2 - Medium) | Resolved
-- **Title**: Native Chromium password breach security overlays obstructing automated interactions.
-- **Root Cause**: Chromium profile security alerts intercepted clicks on automated authentication tests.
-- **Resolution**: Initialized experimental `ChromeOptions` preferences (`credentials_enable_service=false`, `password_leak_detection=false`).
-- **Regression Verification**: Tests execute cleanly without profile-level interceptions.
+### BUG-SG-002 (Medium - Chromium Security Notification Overlays)
+- **Component**: Driver Configuration / Browser Security Layer
+- **Root Cause Analysis (RCA)**: Native Chromium alerts about test credentials compromised in third-party data breaches.
+- **Resolution**: Added experimental preferences (`credentials_enable_service=false`, `password_leak_detection=false`) in ChromeOptions.
+- **Status**: CLOSED & VERIFIED

@@ -12,51 +12,48 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 @Epic("API Validation Suite")
-@Feature("User Management Endpoints")
+@Feature("User & Order Service Endpoints")
 public class UserApiTests {
 
     @BeforeClass(groups = {"smoke", "regression"})
     public void setupApi() {
-        RestAssured.baseURI = "https://reqres.in/api";
+        RestAssured.baseURI = "https://jsonplaceholder.typicode.com";
     }
 
-    @Test(groups = {"smoke", "regression"}, description = "Retrieve list of users (GET)")
-    @Description("Validate HTTP 200 and schema consistency of user list")
+    @Test(groups = {"smoke", "regression"}, description = "Retrieve resource record (GET)")
+    @Description("Validate HTTP 200 OK and schema consistency of resource endpoint")
     public void testGetUsersList() {
         given()
-            .queryParam("page", 2)
         .when()
-            .get("/users")
+            .get("/posts/1")
         .then()
             .statusCode(200)
-            .body("page", equalTo(2))
-            .body("data", hasSize(greaterThan(0)))
-            .body("data[0].id", notNullValue());
+            .body("id", equalTo(1))
+            .body("title", notNullValue());
     }
 
-    @Test(groups = {"smoke", "regression"}, description = "Create user record (POST)")
-    @Description("Validate HTTP 201 response and verify returned resource ID")
+    @Test(groups = {"smoke", "regression"}, description = "Create resource entry (POST)")
+    @Description("Validate HTTP 201 Created response and assert returned entity ID")
     public void testCreateUser() {
-        String payload = "{\"name\": \"Vivek\", \"job\": \"Automation Analyst\"}";
+        String payload = "{\"title\": \"Order Validation\", \"body\": \"Automated Verification\", \"userId\": 1}";
 
         given()
             .contentType(ContentType.JSON)
             .body(payload)
         .when()
-            .post("/users")
+            .post("/posts")
         .then()
             .statusCode(201)
-            .body("name", equalTo("Vivek"))
-            .body("job", equalTo("Automation Analyst"))
+            .body("title", equalTo("Order Validation"))
             .body("id", notNullValue());
     }
 
-    @Test(groups = {"regression"}, description = "Negative query: user not found (GET)")
-    @Description("Validate HTTP 404 response on missing user record")
+    @Test(groups = {"regression"}, description = "Negative query: resource not found (GET)")
+    @Description("Validate HTTP 404 response on non-existent resource query")
     public void testUserNotFound() {
         given()
         .when()
-            .get("/users/23")
+            .get("/posts/999999")
         .then()
             .statusCode(404);
     }
