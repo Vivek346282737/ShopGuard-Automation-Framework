@@ -10,18 +10,21 @@
         <classes>
             <class name="com.shopguard.ui.LoginTests" />
             <class name="com.shopguard.ui.CheckoutTests" />
+                    <class name="com.shopguard.runners.CucumberTestRunner"/>
         </classes>
     </test>
 
     <test name="Backend-API-Tests">
         <classes>
             <class name="com.shopguard.api.UserApiTests" />
+                    <class name="com.shopguard.runners.CucumberTestRunner"/>
         </classes>
     </test>
 
     <test name="Database-Integrity-Tests">
         <classes>
             <class name="com.shopguard.db.DatabaseTests" />
+                    <class name="com.shopguard.runners.CucumberTestRunner"/>
         </classes>
     </test>
 </suite>
