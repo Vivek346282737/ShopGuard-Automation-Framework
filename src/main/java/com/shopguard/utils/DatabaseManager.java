@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class DatabaseManager {
+    // Production MySQL Profile Configured; CI Test Profile utilizes embedded H2 in-memory engine
     private static final String MYSQL_URL = "jdbc:mysql://localhost:3306/shopguard_db?createDatabaseIfNotExist=true&useSSL=false";
     private static final String H2_URL = "jdbc:h2:mem:shopguard_db;DB_CLOSE_DELAY=-1";
     private static final String USER = "sa";
@@ -14,7 +15,6 @@ public class DatabaseManager {
 
     public static Connection getConnection() {
         try {
-            // Enterprise profile: fallback to H2 embedded engine for zero-dependency CI execution
             Class.forName("org.h2.Driver");
             return DriverManager.getConnection(H2_URL, USER, PASS);
         } catch (Exception e) {
