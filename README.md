@@ -5,6 +5,40 @@
 ---
 
 
+---
+
+## Framework Architecture & Execution Flow
+
+c level text:
+BaseTest (WebDriver & Implicit Config)
+   |
+   +--> Page Object Model (Encapsulated Locators & Actions)
+   |       +--> Test Classes (TestNG Assertions)
+   |
+   +--> Service Layer (REST Assured API Contract Tests)
+   |
+   +--> Persistence Layer (JDBC DatabaseManager with SQL assertions)
+   |
+   `--> TestNG Suite Runner (XML Suite Configuration)
+           |
+           +--> TestListener (Real-time logging & lifecycle tracking)
+           +--> RetryAnalyzer & IAnnotationTransformer (Flaky failure resilience)
+           `--> Allure Reporting & GitHub Actions CI Execution
+
+## Deloitte JD Skillset & Technology Alignment
+
+| Deloitte Requirement | ShopGuard Implementation | Tech Stack Component |
+|---|---|---|
+| **Web UI Automation** | Page Object Model with explicit WebDriverWait synchronization | Selenium WebDriver 4.24 |
+| **Programming Core** | Object-Oriented Architecture, Collections, Exception Handling | Java 17 |
+| **Test Execution Engine** | Test grouping, parallel readiness, parameterized runner | TestNG |
+| **API Testing** | Contract schema validation, GET/POST assertions, 404 handling | REST Assured |
+| **Database Validation** | Parameterized PreparedStatement data integrity queries | JDBC / MySQL / H2 |
+| **Test Strategy & Scope** | Functional, Smoke, Sanity, Regression, and Negative validation | TestNG Suites / BDD |
+| **CI/CD Integration** | Automated headless execution on pull request triggers | GitHub Actions |
+| **Defect & Test Reporting**| Execution lifecycle listeners and rich visual test artifacts | Allure Reporting |
+| **Version Control** | Branch management, clean atomic commits, single ownership | Git & GitHub |
+
 ## Test Strategy
 
 - Functional Testing
